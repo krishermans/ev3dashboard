@@ -1,0 +1,52 @@
+@page "/ev3dashboard"
+
+<h1>EV3 Dashboard</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <button class='@(isLedLeftOn ? "btn btn-success" : "btn btn-primary")'  @onclick="ToggleLedLeft">LED Left</button>
+        </div>
+        <div class="col">
+            <button class='@(isLedRightOn ? "btn btn-success" : "btn btn-primary")'  @onclick="ToggleLedRight">LED Right</button>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<h5>Messages sent:</h5>
+<div class="container">
+    <div class="row">
+
+        <ul class="list-group">
+        @foreach (var msg in messages)
+        {
+            <li class="list-group-item">@msg</li>
+        }
+        </ul>
+    </div>
+</div>
+
+@code {
+    private bool isLedLeftOn = false;
+    private bool isLedRightOn = false;
+
+    private List<string> messages = new List<string>();
+
+    private void ToggleLedLeft()
+    {
+        string msg = "led left " + (isLedLeftOn ? "off" : "on");
+        messages.Add(msg);        
+        isLedLeftOn = !isLedLeftOn;
+
+        // do the send
+    }
+
+    private void ToggleLedRight()
+    {
+        string msg = "led right " + (isLedRightOn ? "off" : "on");
+        messages.Add(msg); 
+        isLedRightOn = !isLedRightOn;
+    }
+}
