@@ -1,5 +1,8 @@
 @page "/ev3dashboard"
 
+@using ev3dashboard.frontend.Data
+@inject EV3BrokerService EV3Service
+
 <h1>EV3 Dashboard</h1>
 
 <div class="container">
@@ -12,6 +15,8 @@
         </div>
     </div>
 </div>
+
+<h3>Broker status: @EV3Service.ConnectionStatus</h3>
 
 <br />
 
@@ -41,6 +46,7 @@
         isLedLeftOn = !isLedLeftOn;
 
         // do the send
+        EV3Service.Send(msg);
     }
 
     private void ToggleLedRight()
@@ -48,5 +54,8 @@
         string msg = "led right " + (isLedRightOn ? "off" : "on");
         messages.Add(msg); 
         isLedRightOn = !isLedRightOn;
+
+        // do the send
+        EV3Service.Send(msg);
     }
 }
